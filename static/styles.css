@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    display: flex;
+    background-image: url("images/backdrop.webp");
+    color: antiquewhite;
+    flex-direction: column;
+}
+.content-wrap {
+    flex: 1 0 auto; /* Flex grow, flex shrink, flex basis */
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+    color: yellow;
+    font-size: large;
+    padding: 10px;
+    text-align: center;
+}
