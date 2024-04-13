@@ -1,6 +1,5 @@
 body {
     height: 100%;
-    width: 100%;
     background-color: black;
     margin: 0;
     overflow: hidden;
@@ -10,7 +9,6 @@ body {
     font-size: 2.5em;
     color: antiquewhite;
     border: 3px solid antiquewhite;
-
 }
 
 .content-wrap {
@@ -40,20 +38,88 @@ footer {
     text-align: center;
 }
 
-.hmpgcontent {
+.hmpgContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.introduction p{
+    font-size: 1em;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.introAnimation, .hiddenL, .hiddenR {
+    margin-left: 125px;
+    margin-top: 300px;
+    margin-bottom: 500px;
+    margin-right: 125px;
+    line-height: 100px;
+    opacity: 0;
+    filter: blur(5px);
+    transition: opacity 3s, transform 5s;
+    display: flex;
+    flex-direction: row;
+}
+.introAnimation {
+    font-family: Impact, sans-serif;
+    transition: opacity 8s, transform 5s;
+    font-size: 2.0em;
+    letter-spacing:5px;
+    line-height: 250px;
+    margin-bottom: 750px;
+    justify-content: center;
+    color: yellow;
+}
+.hiddenL{
+    padding: 125px 125px 125px 0px;
+    transform: translateX(-100%);
+}
+.hiddenR {
+    padding: 125px 0px 125px 125px;
+    transform: translateX(100%);
+}
+
+.hiddenL{
+    padding: 125px 125px 125px 0px;
+    transform: translateX(-100%);
+}
+
+#emoji {
+    font-size: 250px;
+    padding:0px;
+    position:grid;
+}
+
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+    display: flex;
+    align-items: center;
+}
+
+.launchBtn {
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    margin-top: 150px;
+    margin-bottom: 500px;
+}
+
 .btn{
+    width: 45%;
+    height: 200px;
     margin-top: 50px;
-    font-size: 0.5em;
+    font-size: 1.5em;
     border: antiquewhite solid 2px;
     border-radius: 25px;
     text-decoration: none;
     padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn:visited{
@@ -62,16 +128,10 @@ footer {
     background-color: antiquewhite;
 }
 
-.introduction p{
-    color: yellow;
-    margin-left: 50px;
-    margin-right: 50px;
-}
-
 .stars {
 	position: absolute;
-	width: 1px;
-	height: 1px;
+	width: 3px;
+	height: 3px;
 	background-color: #fff;
 	z-index: 2;
 }

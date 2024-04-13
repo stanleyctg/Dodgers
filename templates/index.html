@@ -3,36 +3,40 @@
 
 
 {% block body %}
-    <div class="hmpgcontent">
-        <a class="btn" href="{{ url_for('profile') }}">Launch Me To Space!!</a>
+    <div class="hmpgContainer">
         <div class="introduction">
-            <p>
-                🚀 Welcome, young space explorers, to the wondrous realm of our Solar System! 🌟 Get ready to embark on an extraordinary journey through the cosmos, where planets, moons, and stars await your discovery!
-            </p>
-
-            <p>
-                🌞 Meet the Sun: Our mighty star, the Sun, is the radiant heart of our Solar System, bathing us in its warm glow and providing the energy for life to thrive on Earth. It's like our very own cosmic superstar!
-            </p>
-
-            <p>
-                🪐 Planetary Parade: Zoom past Mercury, the speedster closest to the Sun, and swing by Venus, our fiery sister planet. Then, brace yourselves for the gas giants—Jupiter, Saturn, Uranus, and Neptune—majestic behemoths swirling in the depths of space.
-            </p>
-
-            <p>
-                🌍 Home Sweet Home: Ah, Earth! Our beloved blue marble, teeming with life and beauty. From towering mountains to deep ocean trenches, there's no place quite like it in the entire cosmos.
-            </p>
-
-            <p>
-                🌌 Beyond the Horizon: But wait, there's more! Dive into the mysterious realm of asteroids, comets, and dwarf planets, where icy worlds and rocky debris dance in the endless expanse of space.
-            </p>
-
-            <p>
-                🛰️ Mission: Explore! Get ready to blast off into an intergalactic adventure packed with fun facts, mesmerizing images, and interactive activities that will ignite your curiosity and spark your imagination!
-            </p>
-
-            <p>
-                🌠 Ready to Launch? Buckle up, intrepid space cadets! The universe is calling, and there's a whole galaxy of wonders waiting to be explored. Let's embark on this cosmic quest together and unlock the secrets of our awe-inspiring Solar System!
-            </p>
+            <p class="introAnimation">🚀&nbsp;Welcome Young Space Explorers&nbsp;!</p>
+            <p class="introAnimation">To the wondrous realm of our Solar System&nbsp;!</p>
+            <p class="introAnimation">🌟&nbsp;Get ready to embark on an extraordinary journey through the cosmos, where planets, moons, and stars await your discovery&nbsp;!</p>
+            <section class="hiddenL">
+                <p>Meet the Sun: Our mighty star, the Sun, is the radiant heart of our Solar System, bathing us in its warm glow and providing the energy for life to thrive on Earth. It's like our very own cosmic superstar!</p>
+                <p id="emoji">🌞</p>
+            </section>
+            <section class="hiddenR">
+                <p id="emoji">🪐</p>
+                <p>Planetary Parade: Zoom past Mercury, the speedster closest to the Sun, and swing by Venus, our fiery sister planet. Then, brace yourselves for the gas giants—Jupiter, Saturn, Uranus, and Neptune—majestic behemoths swirling in the depths of space.</p>
+            </section>
+            <section class="hiddenL">
+                <p>Home Sweet Home: Ah, Earth! Our beloved blue marble, teeming with life and beauty. From towering mountains to deep ocean trenches, there's no place quite like it in the entire cosmos.</p>
+                <p id="emoji">🌍</p>
+            </section>
+            <section class="hiddenR">
+                <p id="emoji">🌌</p>
+                <p>Beyond the Horizon: But wait, there's more! Dive into the mysterious realm of asteroids, comets, and dwarf planets, where icy worlds and rocky debris dance in the endless expanse of space.</p>
+            </section>
+            <section class="hiddenL">
+                <p>Mission: Explore! &nbsp;Get ready to blast off into an intergalactic adventure packed with fun facts, mesmerizing images, and interactive activities that will ignite your curiosity and spark your imagination!</p>
+                <p id="emoji">🛰️</p>
+            </section>
+            <section class="hiddenR"  style="margin-bottom:0px;padding-bottom:0px;">
+                <p id="emoji">🌠</p>
+                <p>Ready to Launch? Buckle up, intrepid space cadets! The universe is calling, and there's a whole galaxy of wonders waiting to be explored. Let's embark on this cosmic quest together and unlock the secrets of our awe-inspiring Solar System!</p>
+            </section>
+            <div class="launchBtn">
+                <a class="btn" href="{{ url_for('profile') }}">Launch Me To Space!!</a>
+            </div>
+                
         </div>
     </div>
+    <script src="../static/index.js"></script>
 {% endblock %}
