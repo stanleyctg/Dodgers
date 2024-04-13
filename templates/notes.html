@@ -12,6 +12,20 @@
 {% extends "layout.html" %}
 {% block body %}
 
+<body>
+    <div class="notesContainer">
+        <button id="prev-btn">&#60;</button>
+        <div class="flashcard">
+            <!-- Data will be displayed here -->
+
+            <div id="data-container">
+                <!-- Content from the server will be loaded here -->
+            </div>
+        </div>    
+        <button id="next-btn">&#62;</button>
+    </div>
+    <script src="/static/quiz.js"></script>
+</body>
 
 
 

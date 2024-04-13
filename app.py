@@ -60,10 +60,13 @@ def update_fuel():
     cur = conn.cursor()
     cur.execute("UPDATE accounts SET fuel = ? WHERE username = ?", (fuel, "stanley"))  # Assuming 'fuel' is the correct column name
     conn.commit()  # Make sure to commit your changes
+    cur.execute("SELECT id, question, answer1, answer2, answer3, answer4, correct_answer, facts FROM earth")
+    info = cur.fetchall()
+    formmated_info = [list(row) for row in info]
+
     cur.close()
     conn.close()
-    return jsonify({"Fuel": fuel})
-
+    return jsonify({"formatted_information": formatted_questions})
 
 if __name__ == "__main__":
     app.run(debug=True)

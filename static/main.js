@@ -1,143 +1,14 @@
 $(document).ready(function() {
-    let currentQuestionIndex = 0;
-    let questions = [];
-    let score = 0; // Initialize score
-
     $.ajax({
         url: "/get-questions",
         type: "POST",
         dataType: "json",
         success: function(response) {
-            questions = response.formatted_information;
-            fuel = parseInt(response.fuel, 10); // Assuming the base is 10
-            if (questions.length > 0) {
-                displayQuestion(currentQuestionIndex);
-            }
+            var data = response.formatted_information[0].facts;  // Get the facts of the first question
+            $('#data-container').text(data);  // Display the facts in the data container
         },
         error: function(error) {
-            console.error('Error fetching questions:', error);
+            console.error('Error fetching data:', error);
         }
-
     });
-
-    function displayQuestion(questionIndex) {
-        const questionData = questions[questionIndex];
-        $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
-        const correctAnswer = questionData[6]; // Correct answer at index 6
-
-        ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
-            const answer = questionData[index + 2];
-            const answerElement = $(`#${id}`);
-            answerElement.find('button').off('click').click(function() { 
-                checkAnswer(answer, correctAnswer); 
-            });
-            answerElement.find('span').text(answer);
-        });
-
-        $('#next-question').toggle(questionIndex < questions.length - 1);
-    }
-
-    function checkAnswer(selectedAnswer, correctAnswer) {
-        if (selectedAnswer === correctAnswer) {
-            score++;
-            var element = document.querySelector('#\\#score-quiz');
-
-            element.innerHTML = 'Score: '+ score;  // For HTML content
-
-            alert("Correct! Your new score is " + score);
-            updateFuel();
-            alert(fuel);
-        } else {
-            alert("Incorrect");
-        }
-
-        if (currentQuestionIndex < questions.length - 1) {
-            currentQuestionIndex++;
-            localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
-            displayQuestion(currentQuestionIndex);
-        } else {
-            alert('You have reached the end of the quiz!');
-            $('#next-question').hide();
-            window.location.href = '/home';
-        }
-    }
-
-    // setTimeout(function() {
-    //     window.location.href = '/home';
-    // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
-    
-
-    function updateFuel(){
-        alert("yes")
-        fuel = fuel+ 10;
-        $.ajax({
-            url: "/update_fuel",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "fuel" : fuel
-            },
-            success: function(response) {
-                alert(response.Fuel)
-            },
-            error: function(error) {
-                alert("bad");
-            }
-        });
-    }
-})
-
-
-$(document).ready(function() {
-    var currentIndex = 0; // Initialize the index to 0
-    var facts = []; // Array to store all the facts
-
-    // Function to fetch data from the server
-    function fetchData() {
-        $.ajax({
-            url: "/get-questions",
-            type: "POST",
-            dataType: "json",
-            success: function(response) {
-                facts = response.formatted_information; // Store all facts
-                displayFact(currentIndex); // Display the initial fact
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
-            }
-        });
-    }
-
-    // Function to display the fact at a given index
-    function displayFact(index) {
-        var fact = facts[index][7]; // Get the fact at the specified index
-        $('#data-container').text(fact); // Display the fact
-    }
-
-    // Function to handle the next button click
-    $('#next-btn').click(function() {
-         // Increment the index
-        if (currentIndex >= facts.length - 1) {
-            alert("finished"); // Reset index to loop back to the first fact
-        }else{
-            currentIndex++;
-            displayFact(currentIndex); // Display the next fact            
-        }
-
-    });
-
-    // Function to handle the previous button click
-    $('#prev-btn').click(function() {
-         // Decrement the index
-        if (currentIndex === 0) {
-            alert("start") // Set index to the last fact if it goes below 0
-        }else{
-            currentIndex--;
-            displayFact(currentIndex); // Display the previous fact            
-        }
-
-    });
-
-    // Fetch initial data when the document is ready
-    fetchData();
 });
