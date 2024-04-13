@@ -1,17 +1,21 @@
 <!-- edit here -->
-<div class="question-box">
-    <h1 class="question-title">1. What is the largest ocean on Earth?</h1>
-    <div class="answer" id="answer1">...</div>
-    <div class="answer" id="answer2">...</div>
-    <div class="answer" id="answer3">...</div>
-    <div class="answer" id="answer4">...</div>
-    <!-- Next Question Button -->
-    <button id="next-question">Next Question</button>
-  </div>
-  
 {% extends "layout.html" %}
 {% block body %}
 
+<body>
+    <div class="notesContainer">
+        <button id="prev-btn">&#60;</button>
+        <div class="flashcard">
+            <!-- Data will be displayed here -->
+
+            <div id="data-container">
+                <!-- Content from the server will be loaded here -->
+            </div>
+        </div>    
+        <button id="next-btn">&#62;</button>
+    </div>
+    <script src="/static/quiz.js"></script>
+</body>
 
 
 

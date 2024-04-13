@@ -23,6 +23,10 @@ def inject_user():
 
 @app.route("/")
 def home():
+    return render_template("notes.html")
+
+@app.route("/quiz")
+def quiz():
     return render_template("quiz.html")
 
 @app.route("/home")
