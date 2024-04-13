@@ -21,7 +21,8 @@ def inject_user():
     return {'account': account_details}
 
 
-@app.route("/")
+
+@app.route("/quiz")
 def home():
     return render_template("quiz.html")
 
