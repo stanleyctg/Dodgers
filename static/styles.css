@@ -1,19 +1,68 @@
-html, body {
+body {
     height: 100%;
-    display: flex;
     background-image: url("images/backdrop.webp");
-    color: antiquewhite;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
     flex-direction: column;
+    font-family: Comic Sans MS;
+    font-size: 2.5em;
+    color: antiquewhite;
+    border: 3px solid antiquewhite;
 }
+
 .content-wrap {
-    flex: 1 0 auto; /* Flex grow, flex shrink, flex basis */
+    height: 100vh;
+    overflow-y: scroll;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
 }
-footer {
-    flex-shrink: 0; /* Prevent footer from shrinking */
-    color: yellow;
-    font-size: large;
-    padding: 10px;
+
+.title{
+    height: 150px;
+    width: 100%;
+    font-size: 1.0em;
+    border-bottom: 3px solid antiquewhite;
     text-align: center;
+}
+
+footer {
+    height: 50px;
+    width: 100%;
+    font-size: large;
+    font-family: "Times New Roman", Times, serif;
+    flex-shrink: 0;
+    color: black; 
+    border-top: 3px solid antiquewhite;
+    text-align: center;
+}
+
+.hmpgcontent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn{
+    margin-top: 50px;
+    font-size: 0.5em;
+    border: antiquewhite solid 2px;
+    border-radius: 25px;
+    text-decoration: none;
+    padding: 25px;
+}
+
+.btn:visited{
+    color: antiquewhite;
+    text-decoration: none;
+    background-color: antiquewhite;
+}
+
+.introduction p{
+    color: yellow;
+    margin-left: 50px;
+    margin-right: 50px;
 }
