@@ -15,7 +15,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/get-questions")
+@app.route("/get-questions", methods=['POST'])
 def get_questions():
     conn = sqlite3.connect('quiz.db')
     cur = conn.cursor()
@@ -34,8 +34,9 @@ def get_questions():
         })
     cur.close()
     conn.close()
-
-    return jsonify(formatted_questions)
+    # Cannot be return as there is no ajax connected to it
+    print(formatted_questions[0]["facts"]) # This is the example of the data for flashcard
+    # return jsonify({"formatted_information" : formatted_questions})
 
 
 if __name__ == "__main__":
