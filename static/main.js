@@ -12,6 +12,8 @@ $(document).ready(function() {
         dataType: "json",
         success: function(response) {
             questions = response.formatted_information;
+            alert(response.score)
+            score = response.score;
             if (questions.length > 0) {
                 displayQuestion(currentQuestionIndex);
             }
@@ -45,7 +47,14 @@ $(document).ready(function() {
     }
 
     function checkAnswer(selectedAnswer, correctAnswer) {
-        alert(selectedAnswer === correctAnswer ? 'Correct!' : 'Wrong answer!');
+        if (selectedAnswer === correctAnswer){
+            alert("correct");
+            score++;
+            alert(score)
+            $('#score-quiz').text("Score: " + score);
+        }else{
+            alert("Incorrect")
+        }
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
             localStorage.setItem('currentQuestionIndex', currentQuestionIndex);

@@ -4,6 +4,9 @@ html, body {
     background-image: url("images/backdrop.webp");
     color: antiquewhite;
     flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .content-wrap {
     flex: 1 0 auto; /* Flex grow, flex shrink, flex basis */
