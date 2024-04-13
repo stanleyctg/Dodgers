@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div id="fuel-container">
+    <h1 id="fuel-number">Fuel: {{account["fuel"]}}</h1>
+</div>
+<div id="circle-container">
+    <div class="circle" id="circle1"><div class="dot"></div></div>
+    <div class="circle" id="circle2"></div>
+    <div class="circle" id="circle3"></div>
+</div>
+<button id="move-button">Move Dot</button>
+<button id="start-button">GO</button>
+
+<style>
+    #circle-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px;
+    }
+    .circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: lightblue;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .dot {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+    }
+</style>
+
+{% endblock %}

@@ -1,8 +1,12 @@
-from flask import Flask, jsonify, render_template, g, request
+from flask import Flask, jsonify, render_template, g, request, session
+from flask_session import Session  # You need to install Flask-Session
 import sqlite3
 
 app = Flask(__name__)
 profile_db = "profile.db"
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 # Inject user details into the website system to be accessed
 @app.context_processor
@@ -23,7 +27,7 @@ def inject_user():
 
 @app.route("/")
 def home():
-    return render_template("notes.html")
+    return render_template("level.html")
 
 @app.route("/quiz")
 def quiz():
@@ -67,6 +71,17 @@ def update_fuel():
     conn.close()
     return jsonify({"Fuel": fuel})
 
+
+@app.route("/set_flags", methods=['POST'])
+def set_planet_flags():
+    circleNumber = int(request.form["currentCircle"])
+    session['on_earth'] = circleNumber == 1
+    session['on_mars'] = circleNumber == 2
+    session['on_jupiter'] = circleNumber == 3
+    if session.get('on_mars', True):
+        print("heee")
+
+    return jsonify({"circleNumber": circleNumber})
 
 if __name__ == "__main__":
     app.run(debug=True)

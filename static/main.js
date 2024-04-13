@@ -139,3 +139,109 @@ $(document).ready(function() {
     // Fetch initial data when the document is ready
     fetchData();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const button = document.getElementById('move-button');
+    let currentCircle = 1;
+    let fuel = 0; // Initialize fuel at start
+
+    button.addEventListener('click', function() {
+        $.ajax({
+            url: "/get-questions", // Assuming this endpoint also correctly updates `fuel`
+            type: "POST",
+            dataType: "json",
+            success: function(response) {
+                questions = response.formatted_information;
+                fuel = parseInt(response.fuel, 10); // Update fuel from the server
+
+                // Check fuel conditions based on the current circle before moving the dot
+                if ((currentCircle === 1 && fuel > 100) ) { 
+                    currentCircle = currentCircle >= 3 ? 1 : currentCircle + 1;
+                    moveDotToCircle(currentCircle);
+                    setFlagsPlanet(currentCircle);
+                    fuel = fuel - 100;
+                    $.ajax({
+                        url: "/update_fuel",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "fuel" : fuel
+                        },
+                        success: function(response) {
+                            alert(response.Fuel)
+                            var element = document.querySelector('#fuel-number');
+                            element.innerHTML = 'Fuel: '+ response.Fuel; 
+                        },
+                        error: function(error) {
+                            alert("bad");
+                        }
+                    });
+
+                }
+                else if ((currentCircle === 2 && fuel > 200)){
+                    currentCircle = currentCircle >= 3 ? 1 : currentCircle + 1;
+                    moveDotToCircle(currentCircle);
+                    setFlagsPlanet(currentCircle);
+                    fuel = fuel - 200;
+                    $.ajax({
+                        url: "/update_fuel",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "fuel" : fuel
+                        },
+                        success: function(response) {
+                            var element = document.querySelector('#fuel-number');
+                            element.innerHTML = 'Fuel: '+ response.Fuel; 
+                        },
+                        error: function(error) {
+                            alert("bad");
+                        }
+                    });
+
+                }
+                else if (currentCircle === 3){
+                    setFlagsPlanet(currentCircle);
+                    alert("Last planet reached")
+                }
+                 else {
+                    alert("Not enough fuel to proceed!"); // Inform the user if not enough fuel
+                }
+
+            },
+            error: function(error) {
+                console.error('Error fetching questions:', error);
+            }
+        });
+    });
+
+    function moveDotToCircle(circleNumber) {
+        // Remove dot from all circles
+        document.querySelectorAll('.dot').forEach(dot => {
+            dot.remove();
+        });
+
+        // Add dot to the specified circle
+        const newDot = document.createElement('div');
+        newDot.className = 'dot';
+        document.getElementById('circle' + circleNumber).appendChild(newDot);
+    }
+
+    function setFlagsPlanet(currentCircle){
+        $.ajax({
+            url: "/set_flags",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "currentCircle": currentCircle  // Ensure this matches the function argument
+            },
+            success: function(response) {
+                console.log('Planet flag set for circle:', response.circleNumber);
+            },
+            error: function(error) {
+                console.error("Failed to set flags:", error);
+            }
+        });
+    }
+    
+});
