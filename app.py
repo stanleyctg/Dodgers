@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, g
+from flask import Flask, jsonify, render_template, g, request
 import sqlite3
 
 app = Flask(__name__)
@@ -45,6 +45,17 @@ def get_questions():
 
     print(formmated_info)
     return jsonify({"formatted_information": formmated_info, "score" : score})
+
+
+@app.route("/update_score", methods=['POST'])
+def update_score():
+    score = request.form["Score"]
+    conn = sqlite3.connect('profile.db')
+    cur = conn.cursor()
+    cur.execute("UPDATE accounts SET score = ? WHERE username = ?", (score, "stanley"))
+    cur.close()
+    conn.close()
+
 
 if __name__ == "__main__":
     app.run(debug=True)
