@@ -1,15 +1,16 @@
 body {
     height: 100%;
-    background-image: url("images/backdrop.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    width: 100%;
+    background-color: black;
+    margin: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     font-family: Comic Sans MS;
     font-size: 2.5em;
     color: antiquewhite;
     border: 3px solid antiquewhite;
+
 }
 
 .content-wrap {
@@ -65,4 +66,12 @@ footer {
     color: yellow;
     margin-left: 50px;
     margin-right: 50px;
+}
+
+.stars {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	background-color: #fff;
+	z-index: 2;
 }

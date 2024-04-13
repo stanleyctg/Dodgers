@@ -8,17 +8,17 @@
         <title>Home</title>
         <link rel="stylesheet" href="static/styles.css">
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
-        <script src="{{ url_for('static', filename='main.js') }}"></script>
     </head>
     
     <body>
         <div class="content-wrap">
             <div class="title">Astronaut</div>  
-            {% block body %}{% endblock %}
+            
         </div>
-
+        
         <footer>
             <p>&#169 2024 Dodgers. All rights reserved</p>
         </footer> 
+        <script src="../static/init.js"></script>
     </body>
 </html>
