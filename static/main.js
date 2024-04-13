@@ -1,10 +1,7 @@
 $(document).ready(function() {
     let currentQuestionIndex = 0;
     let questions = [];
-
-    // if (localStorage.getItem('currentQuestionIndex')) {
-    //     currentQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex'), 10);
-    // }
+    let score = 0; // Initialize score
 
     $.ajax({
         url: "/get-questions",
@@ -12,6 +9,7 @@ $(document).ready(function() {
         dataType: "json",
         success: function(response) {
             questions = response.formatted_information;
+            fuel = parseInt(response.fuel, 10); // Assuming the base is 10
             if (questions.length > 0) {
                 displayQuestion(currentQuestionIndex);
             }
@@ -23,37 +21,62 @@ $(document).ready(function() {
 
     function displayQuestion(questionIndex) {
         const questionData = questions[questionIndex];
-        const qIndex = questionData[0];
-        const questionText = questionData[1];
-
-        // Set the question text
-        $('#question-title').text(qIndex + '. ' + questionText);
+        $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
         const correctAnswer = questionData[6]; // Correct answer at index 6
 
-        // Update answer texts and setup click handlers
         ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
             const answer = questionData[index + 2];
             const answerElement = $(`#${id}`);
-            answerElement.find('button').off('click').click(function() { checkAnswer(answer, correctAnswer); });
-            answerElement.find('span').text(answer); // Set text next to the button
+            answerElement.find('button').off('click').click(function() { 
+                checkAnswer(answer, correctAnswer); 
+            });
+            answerElement.find('span').text(answer);
         });
-        if (questionIndex >= questions.length - 1) {
-            $('#next-question').hide(); // Hide the next button if it's the last question
-        } else {
-            $('#next-question').show(); // Otherwise, ensure it is visible
-        }
+
+        $('#next-question').toggle(questionIndex < questions.length - 1);
     }
 
     function checkAnswer(selectedAnswer, correctAnswer) {
-        alert(selectedAnswer === correctAnswer ? 'Correct!' : 'Wrong answer!');
+        if (selectedAnswer === correctAnswer) {
+            score++; // Increment score if correct
+            // Select the element by escaping the hash symbol
+            var element = document.querySelector('#\\#score-quiz');
+
+            element.innerHTML = 'Score: '+ score;  // For HTML content
+
+            alert("Correct! Your new score is " + score);
+            updateFuel();
+            alert(fuel);
+        } else {
+            alert("Incorrect");
+        }
+
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
             localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
             displayQuestion(currentQuestionIndex);
         } else {
-
             alert('You have reached the end of the quiz!');
-            // Optionally handle quiz completion
+            $('#next-question').hide();
         }
     }
-});
+
+    function updateFuel(){
+        alert("yes")
+        fuel = fuel+ 10;
+        $.ajax({
+            url: "/update_fuel",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "fuel" : fuel
+            },
+            success: function(response) {
+                alert(response.Fuel)
+            },
+            error: function(error) {
+                alert("bad");
+            }
+        });
+    }
+})
