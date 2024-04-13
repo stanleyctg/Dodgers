@@ -57,7 +57,7 @@ $(document).ready(function() {
         } else {
             alert('You have reached the end of the quiz!');
             $('#next-question').hide();
-            window.location.href = '/home';
+            window.location.href = '/';
         }
     }
 
@@ -158,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if ((currentCircle === 1 && fuel > 100) ) { 
                     currentCircle = currentCircle >= 3 ? 1 : currentCircle + 1;
                     moveDotToCircle(currentCircle);
-                    setFlagsPlanet(currentCircle);
                     fuel = fuel - 100;
                     $.ajax({
                         url: "/update_fuel",
@@ -181,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 else if ((currentCircle === 2 && fuel > 200)){
                     currentCircle = currentCircle >= 3 ? 1 : currentCircle + 1;
                     moveDotToCircle(currentCircle);
-                    setFlagsPlanet(currentCircle);
                     fuel = fuel - 200;
                     $.ajax({
                         url: "/update_fuel",
@@ -201,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 }
                 else if (currentCircle === 3){
-                    setFlagsPlanet(currentCircle);
                     alert("Last planet reached")
                 }
                  else {
@@ -227,21 +224,5 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('circle' + circleNumber).appendChild(newDot);
     }
 
-    function setFlagsPlanet(currentCircle){
-        $.ajax({
-            url: "/set_flags",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "currentCircle": currentCircle  // Ensure this matches the function argument
-            },
-            success: function(response) {
-                console.log('Planet flag set for circle:', response.circleNumber);
-            },
-            error: function(error) {
-                console.error("Failed to set flags:", error);
-            }
-        });
-    }
     
 });
