@@ -81,12 +81,12 @@ CREATE TABLE accounts (
     id INTEGER PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    score INTEGER DEFAULT 0,
+    fuel INTEGER DEFAULT 0,
     planet TEXT NOT NULL
 )
 ''')
 c_profile.execute('''
-INSERT INTO accounts (username, password, score, planet)
+INSERT INTO accounts (username, password, fuel, planet)
 VALUES ("stanley", "12345", 0, "Earth")
 ''')
 conn_profile.commit()
