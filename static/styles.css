@@ -1,4 +1,4 @@
-html, body {
+body {
     height: 100%;
     display: flex;
     background-image: url("images/backdrop.webp");
@@ -18,18 +18,9 @@ footer {
     text-align: center;
 }
 
-#header-rectangle {
-    background-color: #377ac6; 
-    height: 40px; 
-    width: calc(100% - 2px); 
-    margin-top: -1px; 
-    border-top-left-radius: 7px; 
-    border-top-right-radius: 7px; 
-}
-
-#flashcard {
+.flashcard {
     position: relative;
-    margin: 100px auto; 
+    /* margin: 100px auto;  */
     height: 500px; 
     padding: 0px;
     background-color: antiquewhite;
@@ -42,6 +33,11 @@ footer {
     justify-content: centerS;
     align-items: center;
     box-sizing: border-box;
+}
+
+.notesContainer {
+    display: flex;
+    flex-direction: row;
 }
 
 #data-container {
@@ -57,8 +53,26 @@ footer {
     justify-content: center;
     align-items: center;
     height: 100%; 
-    width: calc(100% - 40px); 
+    width: 70%; 
 }
 
 
+#next-btn {
+    font-size: 5em;
+    background-color: transparent;
+    margin-left: 50px;
+    margin-right: 50px;
+    border: transparent solid;
+    color: antiquewhite;
+    width: 25%;
+}
 
+#prev-btn {
+    font-size: 5em;
+    background-color: transparent;
+    margin-left: 50px;
+    margin-right: 50px;
+    border: transparent solid;
+    color: antiquewhite;
+    width: 25%;
+}

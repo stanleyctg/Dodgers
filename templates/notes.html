@@ -3,16 +3,16 @@
 {% block body %}
 
 <body>
-    <div id="flashcard" style="margin: 50px auto; width: 40%; max-width: 400px; padding: 20px; 
-    background-color: #f9f9f9; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; overflow: hidden;">
-        <!-- Data will be displayed here -->
-        <div id="header-rectangle"></div>
-        <div id="data-container">
-            <!-- Content from the server will be loaded here -->
-        </div>
-        <button id="prev-btn">back</button>
-        <button id="next-btn">next</button>
+    <div class="notesContainer">
+        <button id="prev-btn">&#60;</button>
+        <div class="flashcard">
+            <!-- Data will be displayed here -->
 
+            <div id="data-container">
+                <!-- Content from the server will be loaded here -->
+            </div>
+        </div>    
+        <button id="next-btn">&#62;</button>
     </div>
     <script src="/static/quiz.js"></script>
 </body>
