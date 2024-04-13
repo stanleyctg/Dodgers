@@ -32,8 +32,9 @@ footer {
     margin: 100px auto; 
     height: 500px; 
     padding: 0px;
-    background-color: white;
+    background-color: antiquewhite;
     border: 1px solid #ccc;
+    opacity: 60%;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     display: flex;

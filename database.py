@@ -42,14 +42,12 @@ CREATE TABLE jupiter (
 # Insert data into the Earth table
 # Insert data into the Earth table with multiple answers
 # Insert data into the Earth table
-# Insert data into the Earth table with multiple answers
-# Insert data into the Earth table
 c_quiz.executemany('''
 INSERT INTO earth (question, answer1, answer2, answer3, answer4, correct_answer, facts) VALUES (?, ?, ?, ?, ?, ?, ?)
 ''', [
-    ("What is the largest ocean on Earth?", "Pacific", "The Pacific Ocean is the largest and deepest of Earth's oceanic divisions."),
-    ("What percentage of the Earth's surface is covered by water?", "About 71%", "The Earth's surface is covered by water to a large extent, majorly by oceans."),
-    ("How old is the Earth?", "About 4.5 billion years", "Scientists estimate that Earth is about 4.5 billion years old.")
+    ("What is the largest ocean on Earth?", "Pacific","Atlantic","Indian","Southern", "Pacific", "The Pacific Ocean is the largest and deepest of Earth's oceanic divisions."),
+    ("What percentage of the Earth's surface is covered by water?", "About 71%","About 65%","About 75%","About 80%", "About 71%", "The Earth's surface is covered by water to a large extent, majorly by oceans."),
+    ("How old is the Earth?", "About 4.5 billion years","About 4 billion years","About 5 billion years","About 3.5 billion years", "About 4.5 billion years", "Scientists estimate that Earth is about 4.5 billion years old.")
 ])
 
 # Insert data into the Mars table
