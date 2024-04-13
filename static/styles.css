@@ -17,3 +17,47 @@ footer {
     padding: 10px;
     text-align: center;
 }
+
+#header-rectangle {
+    background-color: #377ac6; 
+    height: 40px; 
+    width: calc(100% - 2px); 
+    margin-top: -1px; 
+    border-top-left-radius: 7px; 
+    border-top-right-radius: 7px; 
+}
+
+#flashcard {
+    position: relative;
+    margin: 100px auto; 
+    height: 500px; 
+    padding: 0px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: centerS;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#data-container {
+    text-align: justify;
+    word-wrap: break-word;
+    color: #333333;
+    max-width: 100%;
+    font-size: large;
+    line-height: 2.0;
+    padding:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; 
+    width: calc(100% - 40px); 
+}
+
+
+
