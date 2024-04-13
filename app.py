@@ -22,7 +22,7 @@ def inject_user():
 
 
 
-@app.route("/quiz")
+@app.route("/")
 def home():
     return render_template("quiz.html")
 
@@ -66,7 +66,7 @@ def update_fuel():
 
     cur.close()
     conn.close()
-    return jsonify({"formatted_information": formatted_questions})
+    return jsonify({"formatted_information": formmated_info})
 
 if __name__ == "__main__":
     app.run(debug=True)
