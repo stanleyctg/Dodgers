@@ -2,13 +2,20 @@ html, body {
     height: 100%;
     display: flex;
     background-image: url("images/backdrop.webp");
-    color: antiquewhite;
+    color: rgb(187, 126, 47);
     flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .content-wrap {
-    flex: 1 0 auto; /* Flex grow, flex shrink, flex basis */
-    display: flex;
+    /*flex: 1 0 auto; /* Flex grow, flex shrink, flex basis */
+    /* display: flex; */
+    padding-top: 100px;
     flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    height: 100%;
 }
 footer {
     flex-shrink: 0; /* Prevent footer from shrinking */
@@ -16,4 +23,26 @@ footer {
     font-size: large;
     padding: 10px;
     text-align: center;
+    background: transparent;
 }
+.question-paper {
+    background-color: white; 
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 40px; 
+    margin: 20px; 
+    width: 70%; 
+    max-width: 900px; 
+    box-sizing: border-box; 
+    display: block; 
+    margin: auto; 
+    opacity: 60%;
+}
+.answer {
+    margin-bottom: 10px; 
+    
+}
+.question-paper, .answer {
+    font-family: 'Permanent Marker', cursive;
+}
+/* style quiz page */
