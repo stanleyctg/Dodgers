@@ -1,3 +1,4 @@
+"""Takes care of routing"""
 from flask import Flask, render_template
 
 
