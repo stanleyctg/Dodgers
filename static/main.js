@@ -9,6 +9,7 @@ $(document).ready(function() {
         dataType: "json",
         success: function(response) {
             questions = response.formatted_information;
+            fuel = parseInt(response.fuel, 10); // Assuming the base is 10
             if (questions.length > 0) {
                 displayQuestion(currentQuestionIndex);
             }
@@ -44,11 +45,11 @@ $(document).ready(function() {
             element.innerHTML = 'Score: '+ score;  // For HTML content
 
             alert("Correct! Your new score is " + score);
+            updateFuel();
+            alert(fuel);
         } else {
             alert("Incorrect");
         }
-        
-
 
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
@@ -58,5 +59,24 @@ $(document).ready(function() {
             alert('You have reached the end of the quiz!');
             $('#next-question').hide();
         }
+    }
+
+    function updateFuel(){
+        alert("yes")
+        fuel = fuel+ 10;
+        $.ajax({
+            url: "/update_fuel",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "fuel" : fuel
+            },
+            success: function(response) {
+                alert(response.Fuel)
+            },
+            error: function(error) {
+                alert("bad");
+            }
+        });
     }
 })

@@ -38,23 +38,26 @@ def get_questions():
 
     conn = sqlite3.connect('profile.db')
     cur = conn.cursor()
-    cur.execute("SELECT score FROM accounts WHERE username = ?", ("stanley",))
+    cur.execute("SELECT fuel FROM accounts WHERE username = ?", ("stanley",))
     score = cur.fetchall()
     cur.close()
     conn.close()
 
     print(formmated_info)
-    return jsonify({"formatted_information": formmated_info, "score" : score})
+    return jsonify({"formatted_information": formmated_info, "fuel" : score})
 
 
-@app.route("/update_score", methods=['POST'])
-def update_score():
-    score = request.form["Score"]
+@app.route("/update_fuel", methods=['POST'])
+def update_fuel():
+    fuel = request.form["fuel"]  # Correctly capture the 'fuel' from the form data
+    print("Fuel received:", fuel)  # This will show in your server log
     conn = sqlite3.connect('profile.db')
     cur = conn.cursor()
-    cur.execute("UPDATE accounts SET score = ? WHERE username = ?", (score, "stanley"))
+    cur.execute("UPDATE accounts SET fuel = ? WHERE username = ?", (fuel, "stanley"))  # Assuming 'fuel' is the correct column name
+    conn.commit()  # Make sure to commit your changes
     cur.close()
     conn.close()
+    return jsonify({"Fuel": fuel})
 
 
 if __name__ == "__main__":
