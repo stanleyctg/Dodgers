@@ -25,6 +25,10 @@ def inject_user():
 def home():
     return render_template("quiz.html")
 
+@app.route("/home")
+def back():
+    return render_template("index.html")
+
 @app.route("/get-questions", methods=['POST'])
 def get_questions():
     conn = sqlite3.connect('quiz.db')

@@ -10,7 +10,8 @@ html, body {
 }
 .content-wrap {
     /*flex: 1 0 auto; /* Flex grow, flex shrink, flex basis */
-    display: flex;
+    /* display: flex; */
+    padding-top: 100px;
     flex-direction: column;
     justify-content: center; 
     align-items: center; 
@@ -35,6 +36,7 @@ footer {
     box-sizing: border-box; 
     display: block; 
     margin: auto; 
+    opacity: 60%;
 }
 .answer {
     margin-bottom: 10px; 

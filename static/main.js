@@ -38,8 +38,7 @@ $(document).ready(function() {
 
     function checkAnswer(selectedAnswer, correctAnswer) {
         if (selectedAnswer === correctAnswer) {
-            score++; // Increment score if correct
-            // Select the element by escaping the hash symbol
+            score++;
             var element = document.querySelector('#\\#score-quiz');
 
             element.innerHTML = 'Score: '+ score;  // For HTML content
@@ -58,8 +57,14 @@ $(document).ready(function() {
         } else {
             alert('You have reached the end of the quiz!');
             $('#next-question').hide();
+            window.location.href = '/home';
         }
     }
+
+    // setTimeout(function() {
+    //     window.location.href = '/home';
+    // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
+    
 
     function updateFuel(){
         alert("yes")
