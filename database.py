@@ -86,6 +86,12 @@ CREATE TABLE accounts (
 )
 ''')
 c_profile.execute('''
+CREATE TABLE view (
+    id INTEGER PRIMARY KEY,
+    stored_info TEXT NOT NULL
+)
+''')
+c_profile.execute('''
 INSERT INTO accounts (username, password, fuel, planet)
 VALUES ("stanley", "12345", 10000, "Earth")
 ''')

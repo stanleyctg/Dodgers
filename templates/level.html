@@ -2,18 +2,13 @@
 {% block body %}
 
 <div id="fuel-container">
-    <h1 id="fuel-number">Fuel: {{account["fuel"]}}</h1>
+    <h1 id="fuel-number">Fuel: {{ account["fuel"] }}</h1>
 </div>
 <div id="circle-container">
-    <div class="circle" id="circle1"><div class="dot"></div></div>
-    <div class="circle" id="circle2"></div>
-    <div class="circle" id="circle3"></div>
+    <div class="circle" id="circle1"><button class="planet-btn" data-planet="1">Earth</button></div>
+    <div class="circle" id="circle2"><button class="planet-btn" data-planet="2">Mars</button></div>
+    <div class="circle" id="circle3"><button class="planet-btn" data-planet="3">Jupiter</button></div>
 </div>
-<button id="move-button">Move Dot</button>
-<a href="{{ url_for ('notes') }}">
-    <button id="start-button">GO</button>
-</a>
-
 
 <style>
     #circle-container {
@@ -31,13 +26,15 @@
         justify-content: center;
         align-items: center;
     }
-    .dot {
-        width: 20px;
-        height: 20px;
-        background-color: red;
-        border-radius: 50%;
-        position: absolute;
+    .planet-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
     }
 </style>
 
 {% endblock %}
+

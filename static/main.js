@@ -1,91 +1,115 @@
-$(document).ready(function() {
-    let currentQuestionIndex = 0;
-    let questions = [];
-    let score = 0; // Initialize score
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.planet-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const planetNumber = this.getAttribute('data-planet');
+            console.log("Planet number: ", planetNumber);
+            fetchDataForPlanet(planetNumber);
+        });
+    });
+});
 
+function fetchDataForPlanet(planetNumber) {
     $.ajax({
-        url: "/get-questions",
+        url: "/get-questions2",
         type: "POST",
+        data: { "planet": planetNumber },
         dataType: "json",
         success: function(response) {
-            questions = response.formatted_information;
-            fuel = parseInt(response.fuel, 10); // Assuming the base is 10
-            if (questions.length > 0) {
-                displayQuestion(currentQuestionIndex);
+            console.log('Data fetched for planet ' + planetNumber + ": ", response);
+            if (response.formatted_information) {
+                alert('Data fetched successfully.');
+                console.log('Formatted Information: ', response.formatted_information);
+                saveData(response.formatted_information);  // Pass data directly to saveData
             }
         },
         error: function(error) {
-            console.error('Error fetching questions:', error);
+            alert("Failed to fetch data.");
+            console.error('Error fetching data for planet ' + planetNumber, error);
         }
     });
+}
 
-    function displayQuestion(questionIndex) {
-        const questionData = questions[questionIndex];
-        $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
-        const correctAnswer = questionData[6]; // Correct answer at index 6
-
-        ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
-            const answer = questionData[index + 2];
-            const answerElement = $(`#${id}`);
-            answerElement.find('button').off('click').click(function() { 
-                checkAnswer(answer, correctAnswer); 
-            });
-            answerElement.find('span').text(answer);
-        });
-
-        $('#next-question').toggle(questionIndex < questions.length - 1);
-    }
-
-    function checkAnswer(selectedAnswer, correctAnswer) {
-        if (selectedAnswer === correctAnswer) {
-            score++;
-            var element = document.querySelector('#\\#score-quiz');
-
-            element.innerHTML = 'Score: '+ score;  // For HTML content
-
-            alert("Correct! Your new score is " + score);
-            updateFuel();
-            alert(fuel);
-        } else {
-            alert("Incorrect");
+function saveData(formattedInfo){
+    console.log("Saving data: ", formattedInfo);
+    $.ajax({
+        url: "/save_data",
+        type: "POST",
+        contentType: "application/json",  // Setting content type as JSON
+        data: JSON.stringify({ "formatted_info": formattedInfo }),
+        dataType: "json",
+        success: function(response) {
+            alert('Data saved successfully: ' + JSON.stringify(response));
+            alert(response.data_saved)
+            window.location.href = '/notes';
+        },
+        error: function(error) {
+            alert("Failed to save data.");
+            console.error('Error saving data: ', error);
         }
+    });
+}
 
-        if (currentQuestionIndex < questions.length - 1) {
-            currentQuestionIndex++;
-            localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
-            displayQuestion(currentQuestionIndex);
-        } else {
-            alert('You have reached the end of the quiz!');
-            $('#next-question').hide();
-            window.location.href = '/';
-        }
-    }
+function displayData(globalData) {
+    // Process and display data specific to the planet
+    alert(globalData);
+    // // Example: Update UI elements based on fetched data
+    // document.querySelector('#fuel-number').innerHTML = 'Fuel: ' + data.fuel;
+}
+// $(document).ready(function() {
+//     var currentIndex = 0; // Initialize the index to 0
+//     var facts = []; // Array to store all the facts
 
-    // setTimeout(function() {
-    //     window.location.href = '/home';
-    // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
-    
+//     // Function to fetch data from the server
+//     function fetchData() {
+//         $.ajax({
+//             url: "/get-questions",
+//             type: "POST",
+//             dataType: "json",
+//             success: function(response) {
+//                 alert(response.formatted_information)
+//                 facts = response.formatted_information; // Store all facts
+//                 displayFact(currentIndex); // Display the initial fact
+//                 alert(facts);
+//             },
+//             error: function(error) {
+//                 console.error('Error fetching data:', error);
+//             }
+//         });
+//     }
 
-    function updateFuel(){
-        alert("yes")
-        fuel = fuel+ 10;
-        $.ajax({
-            url: "/update_fuel",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "fuel" : fuel
-            },
-            success: function(response) {
-                alert(response.Fuel)
-            },
-            error: function(error) {
-                alert("bad");
-            }
-        });
-    }
-})
+//     // Function to display the fact at a given index
+//     function displayFact(index) {
+//         var fact = facts[index][7]; // Get the fact at the specified index
+//         $('#data-container').text(fact); // Display the fact
+//     }
 
+//     // Function to handle the next button click
+//     $('#next-btn').click(function() {
+//          // Increment the index
+//         if (currentIndex >= facts.length - 1) {
+//             alert("finished"); // Reset index to loop back to the first fact
+//         }else{
+//             currentIndex++;
+//             displayFact(currentIndex); // Display the next fact            
+//         }
+
+//     });
+
+//     // Function to handle the previous button click
+//     $('#prev-btn').click(function() {
+//          // Decrement the index
+//         if (currentIndex === 0) {
+//             alert("start") // Set index to the last fact if it goes below 0
+//         }else{
+//             currentIndex--;
+//             displayFact(currentIndex); // Display the previous fact            
+//         }
+
+//     });
+
+//     // Fetch initial data when the document is ready
+//     fetchData();
+// });
 $(document).ready(function() {
     var currentIndex = 0; // Initialize the index to 0
     var facts = []; // Array to store all the facts
@@ -93,20 +117,35 @@ $(document).ready(function() {
     // Function to fetch data from the server
     function fetchData() {
         $.ajax({
-            url: "/get-questions",
+            url: "/retrieve_data",
             type: "POST",
             dataType: "json",
             success: function(response) {
-                facts = response.formatted_information; // Store all facts
-                displayFact(currentIndex); // Display the initial fact
+                // alert(response.stored_data)
+                facts = response.stored_data;
+                facts = parseQuestionString(facts)
+                displayFact(currentIndex);
+                alert(facts)
             },
             error: function(error) {
-                console.error('Error fetching data:', error);
+                alert("Failed to fetch data.");
             }
         });
     }
 
-    // Function to display the fact at a given index
+    function parseQuestionString(questionString) {
+        var items = questionString.split(',');
+        var questions = [];
+    
+        // Each question consists of 8 elements, loop through and group them
+        for (let i = 0; i < items.length; i += 8) {
+            // Slice out 8 elements for each question and push as a sub-array
+            questions.push(items.slice(i, i + 8));
+        }
+    
+        return questions;
+    }
+
     function displayFact(index) {
         var fact = facts[index][7]; // Get the fact at the specified index
         $('#data-container').text(fact); // Display the fact
@@ -140,89 +179,212 @@ $(document).ready(function() {
     fetchData();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const button = document.getElementById('move-button');
-    let currentCircle = 1;
-    let fuel = 0; // Initialize fuel at start
 
-    button.addEventListener('click', function() {
+$(document).ready(function() {
+    let currentQuestionIndex = 0;
+    let questions = [];
+    let score = 0; // Initialize score
+
+    function fetchData() {
         $.ajax({
-            url: "/get-questions", // Assuming this endpoint also correctly updates `fuel`
+            url: "/retrieve_data",
             type: "POST",
             dataType: "json",
             success: function(response) {
-                questions = response.formatted_information;
-                fuel = parseInt(response.fuel, 10); // Update fuel from the server
-
-                // Check fuel conditions based on the current circle before moving the dot
-                if ((currentCircle === 1 && fuel > 100) ) { 
-                    currentCircle = currentCircle >= 3 ? 1 : currentCircle + 1;
-                    moveDotToCircle(currentCircle);
-                    fuel = fuel - 100;
-                    $.ajax({
-                        url: "/update_fuel",
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            "fuel" : fuel
-                        },
-                        success: function(response) {
-                            alert(response.Fuel)
-                            var element = document.querySelector('#fuel-number');
-                            element.innerHTML = 'Fuel: '+ response.Fuel; 
-                        },
-                        error: function(error) {
-                            alert("bad");
-                        }
-                    });
-
+                alert(response.stored_data)
+                questions = response.stored_data;
+                questions = parseQuestionString2(questions);
+                if (questions.length > 0) {
+                    displayQuestion(currentQuestionIndex);
                 }
-                else if ((currentCircle === 2 && fuel > 200)){
-                    currentCircle = currentCircle >= 3 ? 1 : currentCircle + 1;
-                    moveDotToCircle(currentCircle);
-                    fuel = fuel - 200;
-                    $.ajax({
-                        url: "/update_fuel",
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            "fuel" : fuel
-                        },
-                        success: function(response) {
-                            var element = document.querySelector('#fuel-number');
-                            element.innerHTML = 'Fuel: '+ response.Fuel; 
-                        },
-                        error: function(error) {
-                            alert("bad");
-                        }
-                    });
-
-                }
-                else if (currentCircle === 3){
-                    alert("Last planet reached")
-                }
-                 else {
-                    alert("Not enough fuel to proceed!"); // Inform the user if not enough fuel
-                }
-
+                alert(questions);
             },
             error: function(error) {
-                console.error('Error fetching questions:', error);
+                alert("Failed to fetch data.");
             }
         });
-    });
-
-    function moveDotToCircle(circleNumber) {
-        // Remove dot from all circles
-        document.querySelectorAll('.dot').forEach(dot => {
-            dot.remove();
-        });
-
-        // Add dot to the specified circle
-        const newDot = document.createElement('div');
-        newDot.className = 'dot';
-        document.getElementById('circle' + circleNumber).appendChild(newDot);
     }
 
+    function parseQuestionString2(questionString) {
+        var items = questionString.split(',');
+        var ques = [];
     
-});
+        // Each question consists of 8 elements, loop through and group them
+        for (let i = 0; i < items.length; i += 8) {
+            // Slice out 8 elements for each question and push as a sub-array
+            ques.push(items.slice(i, i + 8));
+        }
+    
+        return ques;
+    }
+
+    function displayQuestion(questionIndex) {
+        const questionData = questions[questionIndex];
+        $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
+        const correctAnswer = questionData[6]; // Correct answer at index 6
+
+        ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
+            const answer = questionData[index + 2];
+            const answerElement = $(`#${id}`);
+            answerElement.find('button').off('click').click(function() { 
+                checkAnswer(answer, correctAnswer); 
+            });
+            answerElement.find('span').text(answer);
+        });
+
+        $('#next-question').toggle(questionIndex < questions.length - 1);
+    }
+
+    function checkAnswer(selectedAnswer, correctAnswer) {
+        if (selectedAnswer === correctAnswer) {
+            score++;
+            var element = document.querySelector('#\\#score-quiz');
+
+            element.innerHTML = 'Score: '+ score;  // For HTML content
+
+            alert("Correct! Your new score is " + score);
+            
+        } else {
+            alert("Incorrect");
+        }
+
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
+            displayQuestion(currentQuestionIndex);
+        } else {
+            alert('You have reached the end of the quiz!');
+            $('#next-question').hide();
+            window.location.href = '/';
+        }
+    }
+
+    // setTimeout(function() {
+    //     window.location.href = '/home';
+    // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
+    
+
+    // function updateFuel(){
+    //     alert("yes")
+    //     fuel = fuel+ 10;
+    //     $.ajax({
+    //         url: "/update_fuel",
+    //         type: "POST",
+    //         dataType: "json",
+    //         data: {
+    //             "fuel" : fuel
+    //         },
+    //         success: function(response) {
+    //             alert(response.Fuel)
+    //         },
+    //         error: function(error) {
+    //             alert("bad");
+    //         }
+    //     });
+    // }
+    fetchData();
+})
+// $(document).ready(function() {
+//     let currentQuestionIndex = 0;
+//     let questions = [];
+//     let score = 0; // Initialize score
+
+//     function fetchData() {
+//         $.ajax({
+//             url: "/retrieve_data",
+//             type: "POST",
+//             dataType: "json",
+//             success: function(response) {
+//                 alert(response.stored_data)
+//                 questions = response.stored_data;
+//                 questions = parseQuestionString(questions);
+//                 if (questions.length > 0) {
+//                     displayQuestion(currentQuestionIndex);
+//                 }
+//                 alert(questions);
+//             },
+//             error: function(error) {
+//                 alert("Failed to fetch data.");
+//             }
+//         });
+//     }
+
+//     function parseQuestionString(questionString) {
+//         var items = questionString.split(',');
+//         var questions = [];
+    
+//         // Each question consists of 8 elements, loop through and group them
+//         for (let i = 0; i < items.length; i += 8) {
+//             // Slice out 8 elements for each question and push as a sub-array
+//             questions.push(items.slice(i, i + 8));
+//         }
+    
+//         return questions;
+//     }
+//     function displayQuestion(questionIndex) {
+//         const questionData = questions[questionIndex];
+//         $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
+//         const correctAnswer = questionData[6]; // Correct answer at index 6
+
+//         ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
+//             const answer = questionData[index + 2];
+//             const answerElement = $(`#${id}`);
+//             answerElement.find('button').off('click').click(function() { 
+//                 checkAnswer(answer, correctAnswer); 
+//             });
+//             answerElement.find('span').text(answer);
+//         });
+
+//         $('#next-question').toggle(questionIndex < questions.length - 1);
+//     }
+
+//     function checkAnswer(selectedAnswer, correctAnswer) {
+//         if (selectedAnswer === correctAnswer) {
+//             score++;
+//             var element = document.querySelector('#\\#score-quiz');
+
+//             element.innerHTML = 'Score: '+ score;  // For HTML content
+
+//             alert("Correct! Your new score is " + score);
+//             updateFuel();
+//             alert(fuel);
+//         } else {
+//             alert("Incorrect");
+//         }
+
+//         if (currentQuestionIndex < questions.length - 1) {
+//             currentQuestionIndex++;
+//             localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
+//             displayQuestion(currentQuestionIndex);
+//         } else {
+//             alert('You have reached the end of the quiz!');
+//             $('#next-question').hide();
+//             window.location.href = '/';
+//         }
+//     }
+
+//     // setTimeout(function() {
+//     //     window.location.href = '/home';
+//     // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
+    
+
+//     function updateFuel(){
+//         alert("yes")
+//         fuel = fuel+ 10;
+//         $.ajax({
+//             url: "/update_fuel",
+//             type: "POST",
+//             dataType: "json",
+//             data: {
+//                 "fuel" : fuel
+//             },
+//             success: function(response) {
+//                 alert(response.Fuel)
+//             },
+//             error: function(error) {
+//                 alert("bad");
+//             }
+//         });
+//     }
+//     fetchData();
+// })
