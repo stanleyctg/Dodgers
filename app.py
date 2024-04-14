@@ -29,17 +29,14 @@ def home():
 def quiz():
     return render_template("quiz.html")
 
-@app.route("/notes")
+@app.route("/study")
 def notes():
-    return render_template("notes.html")
+    return render_template("study.html")
 
-@app.route("/home")
-def back():
-    return render_template("layout.html")
-
-@app.route("/index")
+@app.route("/level")
 def index():
-    return render_template("index.html")
+    return render_template("level.html")
+
 @app.route("/get_fuel", methods=['POST'])
 def get_fuel():
     conn = sqlite3.connect('profile.db')
@@ -127,17 +124,17 @@ def retrieve_data():
     return jsonify({"stored_data" : stored_data})
 
 
-@app.route("/notes")
-def notes():
-    return render_template("notes.html")
+# @app.route("/notes")
+# def notes():
+#     return render_template("notes.html")
 
-@app.route('/profile')
-def profile():
-    return render_template("profile.html")
+# @app.route('/profile')
+# def profile():
+#     return render_template("profile.html")
 
-@app.route("/quiz")
-def quiz():
-    return render_template("quiz.html")
+# @app.route("/quiz")
+# def quiz():
+#     return render_template("quiz.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

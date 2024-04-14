@@ -51,8 +51,7 @@ function saveData(formattedInfo){
         data: JSON.stringify({ "formatted_info": formattedInfo }),
         dataType: "json",
         success: function(response) {
-
-            window.location.href = '/notes';
+            window.location.href = '/study';
         },
         error: function(error) {
             alert("Failed to save data.");
