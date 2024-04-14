@@ -63,7 +63,7 @@ function saveData(formattedInfo){
 
 function displayData(globalData) {
     // Process and display data specific to the planet
-    alert(globalData);
+    // alert(globalData);
     // // Example: Update UI elements based on fetched data
     // document.querySelector('#fuel-number').innerHTML = 'Fuel: ' + data.fuel;
 }
@@ -137,7 +137,6 @@ $(document).ready(function() {
                 facts = response.stored_data;
                 facts = parseQuestionString(facts)
                 displayFact(currentIndex);
-                alert(facts)
             },
             error: function(error) {
                 alert("Failed to fetch data.");
@@ -148,20 +147,33 @@ $(document).ready(function() {
     function parseQuestionString(questionString) {
         var items = questionString.split(',');
         var questions = [];
+        var temp = [];
     
-        // Each question consists of 8 elements, loop through and group them
-        for (let i = 0; i < items.length; i += 8) {
-            // Slice out 8 elements for each question and push as a sub-array
-            questions.push(items.slice(i, i + 8));
-        }
+        items.forEach((item, index) => {
+            temp.push(item);
+    
+            // Assuming the last item of each question could be detected by a keyword or sentence ending.
+            // Here I'm assuming that each description at the end of a question ends with a period.
+            // Adjust the logic according to your actual data.
+            if (item.endsWith('.')) {
+                questions.push([...temp]);  // Clone temp array into questions
+                temp = [];  // Reset for next question
+            }
+        });
     
         return questions;
     }
+    
 
     function displayFact(index) {
-        var fact = facts[index][7]; // Get the fact at the specified index
-        $('#data-container').text(fact); // Display the fact
+        if (index < facts.length && facts[index].length > 7) {
+            var fact = facts[index][7]; // Make sure this index exists
+            $('#data-container').text(fact); // Display the fact
+        } else {
+            $('#data-container').text("No detail available for this fact.");
+        }
     }
+    
 
     // Function to handle the next button click
     $('#next-btn').click(function() {
@@ -203,13 +215,12 @@ $(document).ready(function() {
             type: "POST",
             dataType: "json",
             success: function(response) {
-                alert(response.stored_data)
+                // alert(response.stored_data)
                 questions = response.stored_data;
                 questions = parseQuestionString2(questions);
                 if (questions.length > 0) {
                     displayQuestion(currentQuestionIndex);
                 }
-                alert(questions);
             },
             error: function(error) {
                 alert("Failed to fetch data.");
@@ -221,7 +232,6 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 // alert(response.stored_data)
-                alert(response.fuel)
                 fuel = parseInt(response.fuel);
             },
             error: function(error) {
@@ -233,15 +243,23 @@ $(document).ready(function() {
     function parseQuestionString2(questionString) {
         var items = questionString.split(',');
         var ques = [];
+        var temp = [];
     
-        // Each question consists of 8 elements, loop through and group them
-        for (let i = 0; i < items.length; i += 8) {
-            // Slice out 8 elements for each question and push as a sub-array
-            ques.push(items.slice(i, i + 8));
-        }
+        items.forEach((item, index) => {
+            temp.push(item);
+    
+            // Assuming the last item of each question could be detected by a keyword or sentence ending.
+            // Here I'm assuming that each description at the end of a question ends with a period.
+            // Adjust the logic according to your actual data.
+            if (item.endsWith('.')) {
+                ques.push([...temp]);  // Clone temp array into questions
+                temp = [];  // Reset for next question
+            }
+        });
     
         return ques;
     }
+    
 
     function displayQuestion(questionIndex) {
         const questionData = questions[questionIndex];
@@ -265,7 +283,7 @@ $(document).ready(function() {
             score++;
             var element = document.querySelector('#\\#score-quiz');
             element.innerHTML = 'Score: '+ score;  // For HTML content
-            alert("Correct! Your new score is " + score);
+            alert("Correct");
             updateFuel();
             
         } else {
@@ -299,7 +317,6 @@ $(document).ready(function() {
                 "fuel" : fuel
             },
             success: function(response) {
-                alert(response.Fuel)
             },
             error: function(error) {
                 alert("bad");

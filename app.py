@@ -53,11 +53,11 @@ def get_questions2():
     conn = sqlite3.connect('quiz.db')
     cur = conn.cursor()
     if planet_number == '1':
-        table = 'mars'
+        table = 'earth'
     elif planet_number == '2':
         table = 'mars'
     elif planet_number == '3':
-        table = 'mars'
+        table = 'jupiter'
 
     cur.execute(f"SELECT id, question, answer1, answer2, answer3, answer4, correct_answer, facts FROM {table}")
     questions = cur.fetchall()
