@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, render_template, g, request, json
 import sqlite3
+import random
+
 
 app = Flask(__name__)
 profile_db = "profile.db"
@@ -49,6 +51,8 @@ def get_fuel():
     conn.close()
     print(fuel)
     return jsonify({"fuel": fuel})
+
+
 @app.route("/get-questions2", methods=['POST'])
 def get_questions2():
     planet_number = request.form["planet"]
@@ -64,6 +68,7 @@ def get_questions2():
     cur.execute(f"SELECT id, question, answer1, answer2, answer3, answer4, correct_answer, facts FROM {table}")
     questions = cur.fetchall()
     formmated_info = [list(question) for question in questions]
+    random.shuffle(formmated_info)
     flattened_data = ','.join(str(item) for sublist in formmated_info for item in sublist)
     cur.close()
     conn.close()
