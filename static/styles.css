@@ -287,6 +287,13 @@ footer {
     justify-content: space-around;
 }
 
+#start-button {
+    border-radius:50%;
+    font-family:monospace;
+    font-size: 1.0em;
+    height: 200px;
+}
+
 .question-paper {
     margin-left:5%;
 }

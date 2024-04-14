@@ -179,7 +179,7 @@ $(document).ready(function() {
     $('#next-btn').click(function() {
          // Increment the index
         if (currentIndex >= facts.length - 1) {
-            alert("finished"); // Reset index to loop back to the first fact
+            alert("This is the end of the stack"); // Reset index to loop back to the first fact
         }else{
             currentIndex++;
             displayFact(currentIndex); // Display the next fact            
@@ -191,7 +191,7 @@ $(document).ready(function() {
     $('#prev-btn').click(function() {
          // Decrement the index
         if (currentIndex === 0) {
-            alert("start") // Set index to the last fact if it goes below 0
+            alert("This is the start of the stack") // Set index to the last fact if it goes below 0
         }else{
             currentIndex--;
             displayFact(currentIndex); // Display the previous fact            
