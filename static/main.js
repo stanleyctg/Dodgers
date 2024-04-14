@@ -3,7 +3,22 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const planetNumber = this.getAttribute('data-planet');
             console.log("Planet number: ", planetNumber);
-            fetchDataForPlanet(planetNumber);
+            $.ajax({
+                url: "/get_fuel",
+                type: "POST",
+                dataType: "json",
+                success: function(response) {
+                    fuelAmount = parseInt(response.fuel);
+                },
+                error: function(error) {
+                    alert("Failed to fetch data.");
+                }
+            });
+            if ((planetNumber === '1') || (planetNumber === '2' && fuelAmount >= 100) || (planetNumber === '3' && fuelAmount >= 300)) {
+                fetchDataForPlanet(planetNumber);
+            } else {
+                alert('Not enough fuel to travel to planet ' + planetNumber);
+            }
         });
     });
 });
@@ -17,13 +32,11 @@ function fetchDataForPlanet(planetNumber) {
         success: function(response) {
             console.log('Data fetched for planet ' + planetNumber + ": ", response);
             if (response.formatted_information) {
-                alert('Data fetched successfully.');
                 console.log('Formatted Information: ', response.formatted_information);
                 saveData(response.formatted_information);  // Pass data directly to saveData
             }
         },
         error: function(error) {
-            alert("Failed to fetch data.");
             console.error('Error fetching data for planet ' + planetNumber, error);
         }
     });
@@ -38,8 +51,7 @@ function saveData(formattedInfo){
         data: JSON.stringify({ "formatted_info": formattedInfo }),
         dataType: "json",
         success: function(response) {
-            alert('Data saved successfully: ' + JSON.stringify(response));
-            alert(response.data_saved)
+
             window.location.href = '/notes';
         },
         error: function(error) {
@@ -203,6 +215,19 @@ $(document).ready(function() {
                 alert("Failed to fetch data.");
             }
         });
+        $.ajax({
+            url: "/get_fuel",
+            type: "POST",
+            dataType: "json",
+            success: function(response) {
+                // alert(response.stored_data)
+                alert(response.fuel)
+                fuel = parseInt(response.fuel);
+            },
+            error: function(error) {
+                alert("Failed to fetch data.");
+            }
+        });
     }
 
     function parseQuestionString2(questionString) {
@@ -239,10 +264,9 @@ $(document).ready(function() {
         if (selectedAnswer === correctAnswer) {
             score++;
             var element = document.querySelector('#\\#score-quiz');
-
             element.innerHTML = 'Score: '+ score;  // For HTML content
-
             alert("Correct! Your new score is " + score);
+            updateFuel();
             
         } else {
             alert("Incorrect");
@@ -264,24 +288,24 @@ $(document).ready(function() {
     // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
     
 
-    // function updateFuel(){
-    //     alert("yes")
-    //     fuel = fuel+ 10;
-    //     $.ajax({
-    //         url: "/update_fuel",
-    //         type: "POST",
-    //         dataType: "json",
-    //         data: {
-    //             "fuel" : fuel
-    //         },
-    //         success: function(response) {
-    //             alert(response.Fuel)
-    //         },
-    //         error: function(error) {
-    //             alert("bad");
-    //         }
-    //     });
-    // }
+    function updateFuel(){
+        alert("yes")
+        fuel = fuel+ 10;
+        $.ajax({
+            url: "/update_fuel",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "fuel" : fuel
+            },
+            success: function(response) {
+                alert(response.Fuel)
+            },
+            error: function(error) {
+                alert("bad");
+            }
+        });
+    }
     fetchData();
 })
 // $(document).ready(function() {

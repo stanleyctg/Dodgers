@@ -93,7 +93,7 @@ CREATE TABLE view (
 ''')
 c_profile.execute('''
 INSERT INTO accounts (username, password, fuel, planet)
-VALUES ("stanley", "12345", 10000, "Earth")
+VALUES ("stanley", "12345", 90, "Earth")
 ''')
 conn_profile.commit()
 conn_profile.close()

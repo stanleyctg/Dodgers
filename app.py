@@ -36,29 +36,28 @@ def notes():
 @app.route("/home")
 def back():
     return render_template("index.html")
-@app.route("/get-questions", methods=['POST'])
-def get_questions():
-    conn = sqlite3.connect('quiz.db')
+@app.route("/get_fuel", methods=['POST'])
+def get_fuel():
+    conn = sqlite3.connect('profile.db')
     cur = conn.cursor()
-    cur.execute("SELECT id, question, answer1, answer2, answer3, answer4, correct_answer, facts FROM earth")
-    info = cur.fetchall()
-    formmated_info = [list(row) for row in info]
+    cur.execute("SELECT fuel FROM accounts WHERE username = ?", ('stanley',))
+    fuel = cur.fetchall()
 
     cur.close()
     conn.close()
-    print(formmated_info)
-    return jsonify({"formatted_information": formmated_info})
+    print(fuel)
+    return jsonify({"fuel": fuel})
 @app.route("/get-questions2", methods=['POST'])
 def get_questions2():
     planet_number = request.form["planet"]
     conn = sqlite3.connect('quiz.db')
     cur = conn.cursor()
     if planet_number == '1':
-        table = 'earth'
+        table = 'mars'
     elif planet_number == '2':
         table = 'mars'
     elif planet_number == '3':
-        table = 'jupiter'
+        table = 'mars'
 
     cur.execute(f"SELECT id, question, answer1, answer2, answer3, answer4, correct_answer, facts FROM {table}")
     questions = cur.fetchall()
