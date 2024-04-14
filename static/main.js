@@ -152,7 +152,6 @@ $(document).ready(function() {
         items.forEach((item, index) => {
             temp.push(item);
     
-            // Assuming the last item of each question could be detected by a keyword or sentence ending.
             // Here I'm assuming that each description at the end of a question ends with a period.
             // Adjust the logic according to your actual data.
             if (item.endsWith('.')) {
