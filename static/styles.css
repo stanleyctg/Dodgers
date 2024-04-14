@@ -191,6 +191,11 @@ footer {
 }
 .planet-btn {
     background-size: cover; /* oder 'contain' je nach Bedarf */
+    transition: transform .2s;
+}
+
+.planet-btn:hover {
+    transform: scale(1.5);
 }
 
 #circle1 .planet-btn {
