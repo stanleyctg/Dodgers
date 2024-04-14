@@ -35,6 +35,10 @@ def notes():
 
 @app.route("/home")
 def back():
+    return render_template("layout.html")
+
+@app.route("/index")
+def index():
     return render_template("index.html")
 @app.route("/get_fuel", methods=['POST'])
 def get_fuel():
@@ -122,6 +126,18 @@ def retrieve_data():
     stored_data = cur.fetchall()[-1][1]
     return jsonify({"stored_data" : stored_data})
 
+
+@app.route("/notes")
+def notes():
+    return render_template("notes.html")
+
+@app.route('/profile')
+def profile():
+    return render_template("profile.html")
+
+@app.route("/quiz")
+def quiz():
+    return render_template("quiz.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
