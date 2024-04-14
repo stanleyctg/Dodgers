@@ -14,6 +14,7 @@ body {
 
 .content-wrap {
     height: 100vh;
+    overflow-y: scroll;
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
@@ -28,14 +29,7 @@ body {
 }
 
 footer {
-    height: 50px;
-    width: 100%;
-    font-size: large;
-    font-family: "Times New Roman", Times, serif;
-    flex-shrink: 0;
-    color: white; 
-    border-top: 3px solid antiquewhite;
-    text-align: center;
+    position:absolute;
 }
 
 .stars {
@@ -51,9 +45,14 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
 }
 
-.introduction p{
+.introduction {
+    height: 100%;
+}
+
+.introduction p{ 
     font-size: 1em;
     margin-left: 50px;
     margin-right: 50px;
