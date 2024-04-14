@@ -1,19 +1,39 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class name="levelContainer">
-    <div id="fuel-container">
-        <div id="fuel-number">Fuel: {{account["fuel"]}}</div>
-    </div>
-    <div id="circle-container">
-        <div class="circle" id="circle1"><div class="dot"></div></div>
-        <div class="circle" id="circle2"></div>
-        <div class="circle" id="circle3"></div>
-    </div>
-    <div class="options">
-        <a href="{{ url_for ('notes') }}"> <button id="start-button">Earn Fuel</button></a>
-        <a href=""><button id="move-button">Launch Rocket&nbsp;!</button></a>
-    </div>
+<div id="fuel-container">
+    <h1 id="fuel-number">Fuel: {{ account["fuel"] }}</h1>
 </div>
+<div id="circle-container">
+    <div class="circle" id="circle1"><button class="planet-btn" data-planet="1">Earth</button></div>
+    <div class="circle" id="circle2"><button class="planet-btn" data-planet="2">Mars</button></div>
+    <div class="circle" id="circle3"><button class="planet-btn" data-planet="3">Jupiter</button></div>
+</div>
+
+<!-- <style>
+    #circle-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px;
+    }
+    .circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: lightblue;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .planet-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+</style> -->
 
 {% endblock %}

@@ -112,8 +112,8 @@ footer {
 .launchBtn {
     display: flex;
     justify-content: center;
-    margin-top: 150px;
-    margin-bottom: 300px;
+    margin-bottom: 150px;
+    padding-bottom: 250px;
 }
 
 .btn{
@@ -221,4 +221,34 @@ footer {
     flex-direction: row;
     margin-top: 50px;
     justify-content: space-around;
+}
+
+.question-paper {
+    margin-left:5%;
+}
+
+.score_quiz {
+    margin-top: 50px;
+    font-size: 2em;
+}
+
+.answer {
+    font-size: 1.5em;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.answer button {
+    padding: 15px;
+    margin-right: 35px;
+    border-radius: 25px;
+}
+
+.answer_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.left, .right {
+    margin-left: 15%;
 }
