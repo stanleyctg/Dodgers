@@ -5,9 +5,15 @@
     <h1 id="fuel-number">Fuel: {{ account["fuel"] }}</h1>
 </div>
 <div id="circle-container">
-    <div class="circle" id="circle1"><button class="planet-btn" data-planet="1">Earth</button></div>
-    <div class="circle" id="circle2"><button class="planet-btn" data-planet="2">Mars</button></div>
-    <div class="circle" id="circle3"><button class="planet-btn" data-planet="3">Jupiter</button></div>
+    <div class="circle" id="circle1"><button class="planet-btn" data-planet="1">
+        <div class="popup">EARTH</br>You are here!</div>
+    </button></div>
+    <div class="circle" id="circle2"><button class="planet-btn" data-planet="2">
+        <div class="popup">MARS</br>101Fuel Needed</div>
+    </button></div>
+    <div class="circle" id="circle3"><button class="planet-btn" data-planet="3">
+        <div class="popup">JUPITER</br>201Fuel Needed</div>
+    </button></div>
 </div>
 <div class="homeBtn">
     <a class="btn" href="{{ url_for('home') }}">Why Am I Here&nbsp;?</a>
@@ -15,3 +21,4 @@
 
 
 {% endblock %}
+
