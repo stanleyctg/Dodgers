@@ -265,12 +265,13 @@ $(document).ready(function() {
         const questionData = questions[questionIndex];
         $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
         const correctAnswer = questionData[6]; // Correct answer at index 6
+        const fact = questionData[7];
 
         ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
             const answer = questionData[index + 2];
             const answerElement = $(`#${id}`);
             answerElement.find('button').off('click').click(function() { 
-                checkAnswer(answer, correctAnswer); 
+                checkAnswer(answer, correctAnswer, fact); 
             });
             answerElement.find('span').text(answer);
         });
@@ -278,7 +279,7 @@ $(document).ready(function() {
         $('#next-question').toggle(questionIndex < questions.length - 1);
     }
 
-    function checkAnswer(selectedAnswer, correctAnswer) {
+    function checkAnswer(selectedAnswer, correctAnswer, fact) {
         if (selectedAnswer === correctAnswer) {
             score++;
             var element = document.querySelector('#\\#score-quiz');
@@ -287,7 +288,7 @@ $(document).ready(function() {
             updateFuel();
             
         } else {
-            alert("Incorrect");
+            alert("Incorrect!\n" + fact);
         }
 
         if (currentQuestionIndex < questions.length - 1) {
