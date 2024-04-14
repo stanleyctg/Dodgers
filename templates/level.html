@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class name="levelContainer">
+    <div id="fuel-container">
+        <div id="fuel-number">Fuel: {{account["fuel"]}}</div>
+    </div>
+    <div id="circle-container">
+        <div class="circle" id="circle1"><div class="dot"></div></div>
+        <div class="circle" id="circle2"></div>
+        <div class="circle" id="circle3"></div>
+    </div>
+    <div class="options">
+        <a href="{{ url_for ('notes') }}"> <button id="start-button">Earn Fuel</button></a>
+        <a href=""><button id="move-button">Launch Rocket&nbsp;!</button></a>
+    </div>
+</div>
+
+{% endblock %}

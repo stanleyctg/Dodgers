@@ -1,0 +1,32 @@
+<!-- edit here -->
+{% extends "layout.html" %}
+{% block body %}
+
+<body>
+    <div class="notesContainer">
+        <div class="btn">
+            <button id="prev-btn">&#60;</button>
+        </div>
+        <div class="flashcard">
+            <!-- Data will be displayed here -->
+            <div id="data-container">
+                <div class ="data">
+                    <!-- Content from the server will be loaded here -->
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio, nemo saepe. Voluptatibus sunt saepe quia eligendi, cumque sed veniam eum iure cum delectus? Similique exercitationem asperiores iure tenetur, dicta sed?
+                </div>
+            </div>
+        </div>    
+        <div class="btn">
+            <button id="next-btn">&#62;</button>
+        </div>
+    </div>
+    <div class="flashcardOption">
+        <a href="{{ url_for ('quiz') }}"><button id="start-button">GO</button></a>
+    </div>
+    <script src="/static/quiz.js"></script>
+</body>
+
+
+
+
+{% endblock %}
