@@ -9,31 +9,8 @@
     <div class="circle" id="circle2"><button class="planet-btn" data-planet="2">Mars</button></div>
     <div class="circle" id="circle3"><button class="planet-btn" data-planet="3">Jupiter</button></div>
 </div>
-
-<!-- <style>
-    #circle-container {
-        display: flex;
-        justify-content: space-around;
-        margin: 20px;
-    }
-    .circle {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background-color: lightblue;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .planet-btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        background-color: #4CAF50;
-        color: white;
-        cursor: pointer;
-    }
-</style> -->
+<div class="homeBtn">
+    <a class="btn" href="{{ url_for('home') }}">Why Am I Here&nbsp;?</a>
+</div>
 
 {% endblock %}

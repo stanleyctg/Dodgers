@@ -153,6 +153,17 @@ footer {
     margin-left: 3%;
 }
 
+.homeBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+}
+.homeBtn .btn {
+    width: 25%;
+    height: 75px;
+    font-size: 1.0em;
+}
+
 #circle-container {
     display: flex;
     justify-content: space-around;
@@ -230,6 +241,18 @@ footer {
 .score_quiz {
     margin-top: 50px;
     font-size: 2em;
+}
+
+.exitBtn .btn{
+    display: flex;
+    position:absolute;
+    top: 0;
+    right: 0;
+    margin: 70px;
+    height: 30px;
+    width: 200px;
+    font-size: 0.7em;
+
 }
 
 .answer {
