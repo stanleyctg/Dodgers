@@ -307,7 +307,6 @@ $(document).ready(function() {
     
 
     function updateFuel(){
-        alert("yes")
         fuel = fuel+ 10;
         $.ajax({
             url: "/update_fuel",
