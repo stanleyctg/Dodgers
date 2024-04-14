@@ -6,6 +6,7 @@ import random
 app = Flask(__name__)
 profile_db = "profile.db"
 
+
 # Inject user details into the website system to be accessed
 @app.context_processor
 def inject_user():
@@ -27,13 +28,16 @@ def inject_user():
 def home():
     return render_template("index.html")
 
+
 @app.route("/level")
 def level():
     return render_template("level.html")
 
+
 @app.route("/quiz")
 def quiz():
     return render_template("quiz.html")
+
 
 @app.route("/notes")
 def notes():
@@ -65,7 +69,8 @@ def get_questions2():
     elif planet_number == '3':
         table = 'jupiter'
 
-    cur.execute(f"SELECT id, question, answer1, answer2, answer3, answer4, correct_answer, facts FROM {table}")
+    cur.execute(f"""SELECT id, question, answer1, answer2,
+                answer3, answer4, correct_answer, facts FROM {table}""")
     questions = cur.fetchall()
     formmated_info = [list(question) for question in questions]
     random.shuffle(formmated_info)
@@ -80,17 +85,17 @@ def get_questions2():
     cur.close()
     conn.close()
 
-    return jsonify({"formatted_information": flattened_data, "fuel" : score})
+    return jsonify({"formatted_information": flattened_data, "fuel": score})
 
 
 @app.route("/update_fuel", methods=['POST'])
 def update_fuel():
-    fuel = request.form["fuel"]  # Correctly capture the 'fuel' from the form data
-    print("Fuel received:", fuel)  # This will show in your server log
+    fuel = request.form["fuel"]
     conn = sqlite3.connect('profile.db')
     cur = conn.cursor()
-    cur.execute("UPDATE accounts SET fuel = ? WHERE username = ?", (fuel, "stanley"))  # Assuming 'fuel' is the correct column name
-    conn.commit()  # Make sure to commit your changes
+    cur.execute("""UPDATE accounts SET fuel = ?
+                 WHERE username = ?""", (fuel, "stanley"))
+    conn.commit()
     cur.close()
     conn.close()
     return jsonify({"Fuel": fuel})
@@ -121,13 +126,14 @@ def save_data():
         cur.close()
         conn.close()
 
+
 @app.route("/retrieve_data", methods=['POST'])
 def retrieve_data():
     conn = sqlite3.connect("profile.db")
     cur = conn.cursor()
     cur.execute("SELECT * FROM view")
     stored_data = cur.fetchall()[-1][1]
-    return jsonify({"stored_data" : stored_data})
+    return jsonify({"stored_data": stored_data})
 
 
 if __name__ == "__main__":

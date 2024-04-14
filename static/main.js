@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
 function fetchDataForPlanet(planetNumber) {
     $.ajax({
         url: "/get-questions2",
@@ -41,6 +42,7 @@ function fetchDataForPlanet(planetNumber) {
         }
     });
 }
+
 
 function saveData(formattedInfo){
     console.log("Saving data: ", formattedInfo);
@@ -61,67 +63,7 @@ function saveData(formattedInfo){
     });
 }
 
-function displayData(globalData) {
-    // Process and display data specific to the planet
-    // alert(globalData);
-    // // Example: Update UI elements based on fetched data
-    // document.querySelector('#fuel-number').innerHTML = 'Fuel: ' + data.fuel;
-}
-// $(document).ready(function() {
-//     var currentIndex = 0; // Initialize the index to 0
-//     var facts = []; // Array to store all the facts
 
-//     // Function to fetch data from the server
-//     function fetchData() {
-//         $.ajax({
-//             url: "/get-questions",
-//             type: "POST",
-//             dataType: "json",
-//             success: function(response) {
-//                 alert(response.formatted_information)
-//                 facts = response.formatted_information; // Store all facts
-//                 displayFact(currentIndex); // Display the initial fact
-//                 alert(facts);
-//             },
-//             error: function(error) {
-//                 console.error('Error fetching data:', error);
-//             }
-//         });
-//     }
-
-//     // Function to display the fact at a given index
-//     function displayFact(index) {
-//         var fact = facts[index][7]; // Get the fact at the specified index
-//         $('#data-container').text(fact); // Display the fact
-//     }
-
-//     // Function to handle the next button click
-//     $('#next-btn').click(function() {
-//          // Increment the index
-//         if (currentIndex >= facts.length - 1) {
-//             alert("finished"); // Reset index to loop back to the first fact
-//         }else{
-//             currentIndex++;
-//             displayFact(currentIndex); // Display the next fact            
-//         }
-
-//     });
-
-//     // Function to handle the previous button click
-//     $('#prev-btn').click(function() {
-//          // Decrement the index
-//         if (currentIndex === 0) {
-//             alert("start") // Set index to the last fact if it goes below 0
-//         }else{
-//             currentIndex--;
-//             displayFact(currentIndex); // Display the previous fact            
-//         }
-
-//     });
-
-//     // Fetch initial data when the document is ready
-//     fetchData();
-// });
 $(document).ready(function() {
     var currentIndex = 0; // Initialize the index to 0
     var facts = []; // Array to store all the facts
@@ -186,6 +128,7 @@ $(document).ready(function() {
         }
 
     });
+
 
     // Function to handle the previous button click
     $('#prev-btn').click(function() {
@@ -301,10 +244,6 @@ $(document).ready(function() {
             window.location.href = '/level';
         }
     }
-
-    // setTimeout(function() {
-    //     window.location.href = '/home';
-    // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
     
 
     function updateFuel(){
@@ -325,110 +264,7 @@ $(document).ready(function() {
     }
     fetchData();
 })
-// $(document).ready(function() {
-//     let currentQuestionIndex = 0;
-//     let questions = [];
-//     let score = 0; // Initialize score
 
-//     function fetchData() {
-//         $.ajax({
-//             url: "/retrieve_data",
-//             type: "POST",
-//             dataType: "json",
-//             success: function(response) {
-//                 alert(response.stored_data)
-//                 questions = response.stored_data;
-//                 questions = parseQuestionString(questions);
-//                 if (questions.length > 0) {
-//                     displayQuestion(currentQuestionIndex);
-//                 }
-//                 alert(questions);
-//             },
-//             error: function(error) {
-//                 alert("Failed to fetch data.");
-//             }
-//         });
-//     }
-
-//     function parseQuestionString(questionString) {
-//         var items = questionString.split(',');
-//         var questions = [];
-    
-//         // Each question consists of 8 elements, loop through and group them
-//         for (let i = 0; i < items.length; i += 8) {
-//             // Slice out 8 elements for each question and push as a sub-array
-//             questions.push(items.slice(i, i + 8));
-//         }
-    
-//         return questions;
-//     }
-//     function displayQuestion(questionIndex) {
-//         const questionData = questions[questionIndex];
-//         $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
-//         const correctAnswer = questionData[6]; // Correct answer at index 6
-
-//         ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
-//             const answer = questionData[index + 2];
-//             const answerElement = $(`#${id}`);
-//             answerElement.find('button').off('click').click(function() { 
-//                 checkAnswer(answer, correctAnswer); 
-//             });
-//             answerElement.find('span').text(answer);
-//         });
-
-//         $('#next-question').toggle(questionIndex < questions.length - 1);
-//     }
-
-//     function checkAnswer(selectedAnswer, correctAnswer) {
-//         if (selectedAnswer === correctAnswer) {
-//             score++;
-//             var element = document.querySelector('#\\#score-quiz');
-
-//             element.innerHTML = 'Score: '+ score;  // For HTML content
-
-//             alert("Correct! Your new score is " + score);
-//             updateFuel();
-//             alert(fuel);
-//         } else {
-//             alert("Incorrect");
-//         }
-
-//         if (currentQuestionIndex < questions.length - 1) {
-//             currentQuestionIndex++;
-//             localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
-//             displayQuestion(currentQuestionIndex);
-//         } else {
-//             alert('You have reached the end of the quiz!');
-//             $('#next-question').hide();
-//             window.location.href = '/';
-//         }
-//     }
-
-//     // setTimeout(function() {
-//     //     window.location.href = '/home';
-//     // }, 3000); // Redirects after 3000 milliseconds (3 seconds)
-    
-
-//     function updateFuel(){
-//         alert("yes")
-//         fuel = fuel+ 10;
-//         $.ajax({
-//             url: "/update_fuel",
-//             type: "POST",
-//             dataType: "json",
-//             data: {
-//                 "fuel" : fuel
-//             },
-//             success: function(response) {
-//                 alert(response.Fuel)
-//             },
-//             error: function(error) {
-//                 alert("bad");
-//             }
-//         });
-//     }
-//     fetchData();
-// })
 
 const stars = 150
 
