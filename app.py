@@ -80,6 +80,8 @@ def get_questions2():
 
     conn = sqlite3.connect('profile.db')
     cur = conn.cursor()
+    cur.execute("INSERT INTO view (stored_info) VALUES (?)", (flattened_data,))
+    conn.commit()
     cur.execute("SELECT fuel FROM accounts WHERE username = ?", ("stanley",))
     score = cur.fetchall()
     cur.close()
@@ -99,32 +101,6 @@ def update_fuel():
     cur.close()
     conn.close()
     return jsonify({"Fuel": fuel})
-
-
-@app.route("/save_data", methods=['POST'])
-def save_data():
-    data = request.get_json()
-    formatted_info = data.get('formatted_info')
-
-    # Serialize formatted_info to a JSON string
-    formatted_info_json = json.dumps(formatted_info) if formatted_info else '{}'
-
-    # Connect to SQLite database
-    conn = sqlite3.connect("profile.db")
-    cur = conn.cursor()
-    print(formatted_info)
-
-    # Insert serialized JSON string into the database
-    try:
-        cur.execute("INSERT INTO view (stored_info) VALUES (?)", (formatted_info_json,))
-        conn.commit()
-        return jsonify({"status": "success", "data_saved": formatted_info})
-    except Exception as e:
-        conn.rollback()  # Rollback in case of exception
-        return jsonify({"status": "error", "message": str(e)}), 500
-    finally:
-        cur.close()
-        conn.close()
 
 
 @app.route("/retrieve_data", methods=['POST'])

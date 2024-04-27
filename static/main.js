@@ -40,33 +40,12 @@ function fetchDataForPlanet(planetNumber) {
             // Save the data so it can be use afterwards
             if (response.formatted_information) {
                 console.log('Formatted Information: ', response.formatted_information);
-                saveData(response.formatted_information);  // Pass data directly to saveData
+                window.location.href = '/notes';
+                // saveData(response.formatted_information);  // Pass data directly to saveData
             }
         },
         error: function(error) {
             console.error('Error fetching data for planet ' + planetNumber, error);
-        }
-    });
-}
-
-
-// Save the data of the planet
-function saveData(formattedInfo){
-    console.log("Saving data: ", formattedInfo);
-    // Connects to the backend and save data in sqlite3
-    $.ajax({
-        url: "/save_data",
-        type: "POST",
-        contentType: "application/json",  // Setting content type as JSON
-        data: JSON.stringify({ "formatted_info": formattedInfo }),
-        dataType: "json",
-        success: function(response) {
-            // Goes to the /notes route
-            window.location.href = '/notes';
-        },
-        error: function(error) {
-            alert("Failed to save data.");
-            console.error('Error saving data: ', error);
         }
     });
 }
@@ -107,8 +86,8 @@ $(document).ready(function() {
             temp.push(item);
     
             // Assuming the last item of each question could be detected by a keyword or sentence ending.
-            // Here I'm assuming that each description at the end of a question ends with a period.
-            // Adjust the logic according to your actual data.
+            // Stop appending when all the information of an element is appended
+            // Purposefully made each element to end with a period before a new fact
             if (item.endsWith('.')) {
                 questions.push([...temp]);  // Clone temp array into questions
                 temp = [];  // Reset for next question
@@ -211,8 +190,8 @@ $(document).ready(function() {
             temp.push(item);
     
             // Assuming the last item of each question could be detected by a keyword or sentence ending.
-            // Here I'm assuming that each description at the end of a question ends with a period.
-            // Adjust the logic according to your actual data.
+            // Stop appending when all the information of an element is appended
+            // Purposefully made each element to end with a period before a new fact
             if (item.endsWith('.')) {
                 ques.push([...temp]);  // Clone temp array into questions
                 temp = [];  // Reset for next question
