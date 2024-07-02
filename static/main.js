@@ -37,11 +37,9 @@ function fetchDataForPlanet(planetNumber) {
         dataType: "json",
         success: function(response) {
             console.log('Data fetched for planet ' + planetNumber + ": ", response);
-            // Save the data so it can be use afterwards
             if (response.formatted_information) {
                 console.log('Formatted Information: ', response.formatted_information);
                 window.location.href = '/notes';
-                // saveData(response.formatted_information);  // Pass data directly to saveData
             }
         },
         error: function(error) {
@@ -53,7 +51,6 @@ function fetchDataForPlanet(planetNumber) {
 
 // Handle the flashcard movements
 $(document).ready(function() {
-    // Initialise the index, and facts
     var currentIndex = 0;
     var facts = [];
 
@@ -64,9 +61,7 @@ $(document).ready(function() {
             type: "POST",
             dataType: "json",
             success: function(response) {
-                // alert(response.stored_data)
                 facts = response.stored_data;
-                // Format the facts
                 facts = parseQuestionString(facts)
                 displayFact(currentIndex);
             },
@@ -76,21 +71,18 @@ $(document).ready(function() {
         });
     }
 
+    // Change the format of the questionString so it works for the movement and accessing of index
     function parseQuestionString(questionString) {
-        // Change the format of the questionString so it works for the movement and accessing of index
         var items = questionString.split(',');
         var questions = [];
         var temp = [];
     
         items.forEach((item, index) => {
             temp.push(item);
-    
-            // Assuming the last item of each question could be detected by a keyword or sentence ending.
-            // Stop appending when all the information of an element is appended
-            // Purposefully made each element to end with a period before a new fact
+
             if (item.endsWith('.')) {
-                questions.push([...temp]);  // Clone temp array into questions
-                temp = [];  // Reset for next question
+                questions.push([...temp]); 
+                temp = [];
             }
         });
     
@@ -101,7 +93,6 @@ $(document).ready(function() {
     // Display the fact (flashcard)
     function displayFact(index) {
         if (index < facts.length && facts[index].length > 7) {
-            // The fact exists at index 7
             var fact = facts[index][7];
             $('#data-container').text(fact);
         } else {
@@ -112,11 +103,9 @@ $(document).ready(function() {
 
     // Function to handle the next button click
     $('#next-btn').click(function() {
-         // Increment the index
         if (currentIndex >= facts.length - 1) {
             alert("This is the end of the stack");
-        }else{
-             // Display the next fact  
+        }else{ 
             currentIndex++;
             displayFact(currentIndex);          
         }
@@ -126,7 +115,6 @@ $(document).ready(function() {
 
     // Function to handle the previous button click
     $('#prev-btn').click(function() {
-         // Decrement the index
         if (currentIndex === 0) {
             alert("This is the start of the stack");
         }else{
@@ -136,14 +124,12 @@ $(document).ready(function() {
 
     });
 
-    // Fetch initial data when the document is ready
     fetchData();
 });
 
 
 // Handles the movement and logic of questions
 $(document).ready(function() {
-    // Initialise question index, questions and score
     let currentQuestionIndex = 0;
     let questions = [];
     let score = 0;
@@ -156,7 +142,6 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 questions = response.stored_data;
-                // Same as before call the function to format the questions
                 questions = parseQuestionString2(questions);
                 if (questions.length > 0) {
                     displayQuestion(currentQuestionIndex);
@@ -188,13 +173,9 @@ $(document).ready(function() {
     
         items.forEach((item, index) => {
             temp.push(item);
-    
-            // Assuming the last item of each question could be detected by a keyword or sentence ending.
-            // Stop appending when all the information of an element is appended
-            // Purposefully made each element to end with a period before a new fact
             if (item.endsWith('.')) {
-                ques.push([...temp]);  // Clone temp array into questions
-                temp = [];  // Reset for next question
+                ques.push([...temp]); 
+                temp = [];
             }
         });
     
@@ -202,20 +183,16 @@ $(document).ready(function() {
     }
     
 
-    // Display the questions
+    // Display the questions as mcq format
     function displayQuestion(questionIndex) {
         const questionData = questions[questionIndex];
-        // Questions are at index 1
         $('#question-title').text((questionIndex + 1) + '. ' + questionData[1]);
-        // Correct answers are at index 6
         const correctAnswer = questionData[6];
-        // The fact is at index 7
         const fact = questionData[7];
 
         ['answer1', 'answer2', 'answer3', 'answer4'].forEach((id, index) => {
             const answer = questionData[index + 2];
             const answerElement = $(`#${id}`);
-            // When the answer button is pressed calls the check answer function
             answerElement.find('button').off('click').click(function() { 
                 checkAnswer(answer, correctAnswer, fact); 
             });
@@ -225,9 +202,8 @@ $(document).ready(function() {
         $('#next-question').toggle(questionIndex < questions.length - 1);
     }
 
-    // Function to check answer
+    // Function to check answer and update database
     function checkAnswer(selectedAnswer, correctAnswer, fact) {
-        // If correct, increment the score and update fuel
         if (selectedAnswer === correctAnswer) {
             score++;
             var element = document.querySelector('#\\#score-quiz');
@@ -238,22 +214,18 @@ $(document).ready(function() {
         } else {
             alert("Incorrect!\n" + fact);
         }
-
-        // If there are no more questions, alert user and let them know
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
             displayQuestion(currentQuestionIndex);
         } else {
             alert('You have reached the end of the quiz!');
             $('#next-question').hide();
-            // Goes back to level page
             window.location.href = '/level';
         }
     }
     
     // Function to update fuel
     function updateFuel(){
-        // Adds ten
         fuel = fuel+ 10;
         // Connect to the server and update fuel to the database
         $.ajax({
@@ -270,7 +242,6 @@ $(document).ready(function() {
             }
         });
     }
-    // When document loaded, fetch content
     fetchData();
 })
 
